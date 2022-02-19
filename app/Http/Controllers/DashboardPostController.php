@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Cviebrock\EloquentSluggable\Services\SlugService;
-use Symfony\Component\HttpFoundation\File\File;
+use Illuminate\Support\Facades\File;
 
 class DashboardPostController extends Controller
 {
@@ -138,18 +138,15 @@ class DashboardPostController extends Controller
         $extension = $image->getClientOriginalExtension(); // you can also use file na
         $fileName = time() . '.' . $extension;
         if ($image) {
-            $path = public_path() . '/images/' . $request->user_id . '/' . $request->category_id;
+            $path = public_path() . '/images/' . $post->user_id . '/' . $request->category_id;
             if ($request->oldImage) {
-                $fileOld = $path . '/' . $request->oldImage;
-                // Storage::delete($fileOld);
-                // Storage::disk('public')->delete($fileOld);
-                dd(Storage::disk('public')->delete($fileOld));
-                // unlink($fileOld);
+                $fileOld = public_path() . '/images/' . $post->user_id . '/' . $request->category_id . '/' . $request->oldImage;
+                if (File::exists($fileOld)) {
+                    File::delete($fileOld);
+                }
             }
             $image->move($path, $fileName);
-            // $path = public_path() . '/images';
             $validatedData['image'] = $fileName;
-            // return $fileName;
         }
         $validatedData['user_id'] = auth()->user()->id;
         $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);

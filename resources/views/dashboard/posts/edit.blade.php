@@ -14,7 +14,6 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" name="user_id" value="{{ $post->user->id }}">
                     <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
                         value="{{ old('title', $post->title) }}" autofocus>
                     @error('title')
@@ -57,7 +56,7 @@
                 {{-- Image --}}
                 <div class="col-md-6 mb-3">
                     <label for="image" class="form-label">Thumbnail</label>
-                    {{-- <input type="text" name="oldImage" value="{{ $post->image }}"> --}}
+                    <input type="hidden" name="oldImage" value="{{ $post->image }}">
                     <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image"
                         onchange="previewImage()">
                     @error('image')
