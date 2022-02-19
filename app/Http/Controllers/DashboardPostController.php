@@ -138,10 +138,13 @@ class DashboardPostController extends Controller
         $extension = $image->getClientOriginalExtension(); // you can also use file na
         $fileName = time() . '.' . $extension;
         if ($image) {
+            $path = public_path() . '/images/' . $request->user_id . '/' . $request->category_id;
             if ($request->oldImage) {
-                $path = public_path('/images/' . $request->user_id . '/' . $request->category_id);
                 $fileOld = $path . '/' . $request->oldImage;
-                Storage::disk('public')->delete($fileOld);
+                // Storage::delete($fileOld);
+                // Storage::disk('public')->delete($fileOld);
+                dd(Storage::disk('public')->delete($fileOld));
+                // unlink($fileOld);
             }
             $image->move($path, $fileName);
             // $path = public_path() . '/images';
