@@ -32,8 +32,8 @@
                     <div class="overflow-hidden max-h-72 rounded-b-none md:rounded-lg">
                         @if ($posts[0]->image)
                             <div class="flex justify-center overflow-hidden">
-                                <img src="{{ url('/images/' . $posts[0]->image) }}" class="bg-cover "
-                                    alt="{{ $posts[0]->category->name }}">
+                                <img src="{{ url('/images/' . $posts[0]->user->id . '/' . $posts[0]->category->id . '/' . $posts[0]->image) }}"
+                                    class="bg-cover " alt="{{ $posts[0]->category->name }}">
                             </div>
                         @else
                             <img src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}"
@@ -107,8 +107,8 @@
                                         href="/posts?category={{ $post->category->slug }}">{{ $post->category->name }}</a>
                                 </span>
                                 @if ($post->image)
-                                    <img src="{{ url('/images/' . $post->user->id . '/' . $post->category->slug . '/' . $post->image) }}"
-                                        class="rounded-t-lg bg-cover" alt="{{ $post->category->name }}">
+                                    <img src="{{ url('/images/' . $post->user->id . '/' . $post->category->id . '/' . $post->image) }}"
+                                        class="rounded-t-lg md:max-w-2xl" alt="{{ $post->category->name }}">
                                 @else
                                     <img class="rounded-t-lg bg-cover"
                                         src="https://source.unsplash.com/1200x400?{{ $post->category->name }}"
