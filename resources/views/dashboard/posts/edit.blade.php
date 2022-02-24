@@ -67,11 +67,11 @@
                 </div>
                 {{-- <img class="image-preview img-fluid col-md"> --}}
                 @if ($post->image)
-                    <img src="{{ url('/images/' . $post->image) }}"
+                    <img src="{{ url('/post-images/' . $post->image) }}"
                         class="image-preview img-fluid mb-5 col-sm-5 d-block">
                 @else
-
-                    <img class="image-preview img-fluid mb-5 col-sm-5">
+                    <img src="https://source.unsplash.com/1200x400?{{ $post->category->name }}"
+                        class="image-preview img-fluid mb-5 col-sm-5">
                 @endif
             </div>
             {{-- body --}}

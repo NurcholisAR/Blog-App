@@ -11,7 +11,7 @@
                 <h5 class="my-2 text-2xl font-bold">{{ $title }}</h5>
                 @if ($post->image)
                     <div class="flex justify-center overflow-hidden">
-                        <img src="{{ url('/images/' . $post->image) }}"
+                        <img src="{{ url('/post-images/' . $post->image) }}"
                             class="bg-cover my-4 w-max p-1 border border-inherit rounded h-72"
                             alt="{{ $post->category->name }}">
                     </div>

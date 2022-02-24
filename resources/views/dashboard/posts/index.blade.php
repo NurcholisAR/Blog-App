@@ -36,6 +36,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Title</th>
                     <th scope="col">Category</th>
+                    <th scope="col">Published</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -43,8 +44,10 @@
                 @foreach ($posts as $post)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $post->title }}</td>
+                        {{-- <td>{{ $post->title }}</td> --}}
+                        <td>{!! Str::limit($post->title, '40', ' ...') !!}</td>
                         <td>{{ $post->category->name }}</td>
+                        <td>{{ $post->created_at->format('Y-M-d') }}</td>
                         <td>
                             <a href="/dashboard/posts/{{ $post->slug }}" class="badge bg-info">
                                 <span data-feather="eye"></span>

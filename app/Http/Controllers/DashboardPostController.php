@@ -66,13 +66,13 @@ class DashboardPostController extends Controller
             // $validatedData['image'] = $image;
             $extension = $image->getClientOriginalExtension(); // you can also use file name
             $fileName = time() . '.' . $extension;
-            $path = public_path() . '/images/' . $validatedData['user_id'] = auth()->user()->id . '/' . $validatedData['slug'];
+            $path = public_path() . '/post-images/';
             $image->move($path, $fileName);
             $validatedData['image'] = $fileName;
             // return $fileName;
         }
         $validatedData['user_id'] = auth()->user()->id;
-        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
+        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 100);
 
         // dd($validatedData)
         Post::create($validatedData);
@@ -107,7 +107,7 @@ class DashboardPostController extends Controller
         return view(
             'dashboard.posts.edit',
             [
-                'title'      => 'Edit ' . $post->title,
+                'title'      => 'Edit : ' . Str::limit($post->title, 40, ' ...'),
                 'post'       => $post,
                 'categories' => Category::all()
             ]
@@ -135,12 +135,12 @@ class DashboardPostController extends Controller
         $validatedData = $request->validate($rules);
 
         $image = $request->file('image');
-        $extension = $image->getClientOriginalExtension(); // you can also use file na
-        $fileName = time() . '.' . $extension;
         if ($image) {
-            $path = public_path() . '/images/' . $post->user_id . '/' . $request->category_id;
+            $path = public_path() . '/post-images/';
+            $extension = $image->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
             if ($request->oldImage) {
-                $fileOld = public_path() . '/images/' . $post->user_id . '/' . $request->category_id . '/' . $request->oldImage;
+                $fileOld = public_path() . '/post-images/'  . $request->oldImage;
                 if (File::exists($fileOld)) {
                     File::delete($fileOld);
                 }
@@ -149,7 +149,7 @@ class DashboardPostController extends Controller
             $validatedData['image'] = $fileName;
         }
         $validatedData['user_id'] = auth()->user()->id;
-        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
+        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 100);
         Post::where('id', $post->id)->update($validatedData);
         return redirect('/dashboard/posts')->with('success', 'Post has been updated!');
     }
@@ -160,9 +160,16 @@ class DashboardPostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        if ($post->image) {
+            $file = public_path() . '/post-images/'  . $post->image;
+            if (File::exists($file)) {
+                File::delete($file);
+            }
+        }
+        Post::destroy($post->id);
+        return redirect('/dashboard/posts')->with('success', 'Post has been deleted!');
     }
 
 
