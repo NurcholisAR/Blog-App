@@ -8,7 +8,8 @@
                     Back to all my posts</a>
                 <a href="/dashboard/posts/{{ $post->slug }}/edit" class="btn btn-warning "> <span
                         data-feather="edit"></span>
-                    Edit</a>
+                    Edit
+                </a>
                 <form action="/dashboard/posts/{{ $post->slug }}" method="POST" class="d-inline">
                     @method('delete')
                     @csrf
@@ -19,8 +20,9 @@
                 {{-- {{ $post->body }} --}}
                 @if ($post->image)
                     <div style="overflow:hidden; display:flex; justify-content:center">
-                        <img src="{{ url('/images/' . $post->image) }}" class="card-img-top img-fluid img-thumbnail my-4"
-                            style="max-height: 350px" alt="{{ $post->category->name }}">
+                        <img src="{{ url('/post-images/' . $post->image) }}"
+                            class="card-img-top img-fluid img-thumbnail my-4" style="max-height: 350px"
+                            alt="{{ $post->category->name }}">
                     </div>
                 @else
                     <img src="https://source.unsplash.com/1200x400?{{ $post->category->name }}" class="card-img-top my-4"

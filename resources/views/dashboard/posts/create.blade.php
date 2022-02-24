@@ -62,7 +62,7 @@
                         </div>
                     @enderror
                 </div>
-                <img class="image-preview img-fluid col-md">
+                <img class="image-preview img-fluid mb-5 col-sm-5 d-block">
             </div>
             {{-- Post Body --}}
             <div class="my-3">
